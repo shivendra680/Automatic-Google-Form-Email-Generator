@@ -1,0 +1,22 @@
+var EMAIL_SENT = "EMAIL_SENT";
+
+function sendEmails2()
+{
+  var sheet = SpreadsheetApp.getActiveSheet(); 
+  var dataRange = sheet.getDataRange();
+  var data = dataRange.getValues();
+  for (var i = 1; i < data.length; ++i)
+  {
+    var row = data[i];
+    var emailAddress = row[3];
+    var message = "Type your message of the email here";
+    var emailSent =row[7]; // The value here will be the row in which your form is entering its email address eg. my form was registering the email adress of form responce in column 8 (Note: This works on Array Principal that is                                                        counting starts from 0 so column to enter will be real value-1).
+    if(emailSent != EMAIL_SENT)
+    { 
+      var subject="Heading of the Email Address";
+     MailApp.sendEmail(emailAddress, subject, message);
+      sheet.getRange(i+1, 7).setValue(EMAIL_SENT);  // here to at the place of 7 please enter the value that you entered earlier. 
+     SpreadsheetApp.flush();
+    }  //Don't forget to remove all the comments.
+  }
+}
